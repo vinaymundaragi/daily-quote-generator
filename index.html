@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Quote Generator</title>
+</head>
+
+<body>
+    <div class="quote-box">
+        <h2>Quote of the day</h2>
+        <blockquote id="quote">Loading...</blockquote>
+        <span id="author">Loading...</span>
+        <div>
+            <button onclick="getQuote(apiUrl)">New Quote</button>
+            <button onclick="tweetMyQuote()"><img src="twitter-x-logo.png">Tweet this Quote</button>
+        </div>
+    </div>
+
+    <script>
+        const apiUrl = "https://type.fit/api/quotes";
+        //generates a random number between 1 to 100
+
+
+        async function getQuote(apiUrl) {
+            let number = Math.floor(Math.random() * 10) + 1;
+            const response = await fetch(apiUrl);
+            let data = await response.json();
+            let authorName = data[number].author.split(',')[0];
+            let quote = data[number].text;
+
+            document.getElementById("quote").innerHTML = quote;
+            document.getElementById("author").innerHTML = authorName;
+
+
+        }
+        getQuote(apiUrl);
+
+        function tweetMyQuote() {
+            window.open("https://twitter.com/intent/tweet?text=" + quote.innerHTML + "----- " + author.innerHTML, "Tweet Window", "width=600, height=300");
+
+        }
+    </script>
+</body>
+
+</html>
